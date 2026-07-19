@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +17,11 @@
             background: linear-gradient(rgba(10, 11, 16, 0.8), rgba(10, 11, 16, 0.8)), 
                         url('{{ asset('images/developer_hero_bg.png') }}') center/cover no-repeat;
         }
+        
+        html[data-theme="light"] .hero {
+            background: linear-gradient(rgba(245, 247, 250, 0.8), rgba(245, 247, 250, 0.8)), 
+                        url('{{ asset('images/developer_hero_bg.png') }}') center/cover no-repeat;
+        }
     </style>
 </head>
 <body>
@@ -30,6 +35,9 @@
             <a href="#skills">Habilidades</a>
             <a href="#projects">Proyectos</a>
             <a href="#contact">Contacto</a>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar tema">
+                <i class="fas fa-moon"></i>
+            </button>
         </div>
     </nav>
 
@@ -145,7 +153,7 @@
 
             <div class="project-card">
                 <div class="project-img">
-                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" alt="AI Agent Interface">
+                    <img src="{{ asset('assets/images/CoolCV_Baner.png') }}" alt="CoolCV">
                 </div>
                 <div class="project-info">
                     <h3>CoolCV</h3>
@@ -156,6 +164,24 @@
                         <span class="tag">aws</span>
                           <span class="tag">DynamoDB</span>
                           <span class="tag">amplify</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-img">
+                    <img src="{{ asset('assets/images/DroidBrige_Banner_2.png') }}" alt="DroidBridge">
+                </div>
+                <div class="project-info">
+                    <h3>DroidBridge</h3>
+                    <p>Conexión seamless entre dispositivos Android y Mac. Sincroniza archivos, copia información y espeja la pantalla de tu Android en tu Mac.</p>
+                    <div class="project-tags">
+                     
+                        <span class="tag">Swift</span>
+                        <span class="tag">Android Tools</span>
+                        <span class="tag">macOS</span>
+                        <span class="tag">Mirroring</span>
+                        <span class="tag">File Sync</span>
                     </div>
                 </div>
             </div>
@@ -184,7 +210,7 @@
     </section>
 
     <footer style="padding: 4rem 10%; text-align: center; border-top: 1px solid var(--glass-border); color: var(--text-dim);">
-        <p>&copy; 2025 DEV.LAB - Diseñado con ❤️ para desarrolladores.</p>
+            <p>&copy; 2026 DEV.LAB. Todos los derechos reservados.</p>
         <div style="margin-top: 1.5rem; display: flex; justify-content: center; gap: 1.5rem; font-size: 1.2rem;">
             <a href="#" style="color: var(--text-dim);"><i class="fab fa-github"></i></a>
             <a href="#" style="color: var(--text-dim);"><i class="fab fa-linkedin"></i></a>
@@ -193,6 +219,64 @@
     </footer>
 
     <script>
+        // Theme Management
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+
+        // Function to set theme
+        function setTheme(theme) {
+            htmlElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            updateThemeIcon(theme);
+        }
+
+        // Function to update the icon
+        function updateThemeIcon(theme) {
+            const icon = themeToggle.querySelector('i');
+            if (theme === 'light') {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        }
+
+        // Initialize theme on page load
+        function initializeTheme() {
+            // Check if user has a saved preference
+            const savedTheme = localStorage.getItem('theme');
+            
+            if (savedTheme) {
+                // Use saved preference
+                setTheme(savedTheme);
+            } else {
+                // Use system preference
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const systemTheme = prefersDark ? 'dark' : 'light';
+                setTheme(systemTheme);
+            }
+        }
+
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        });
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            // Only apply if user hasn't set a preference
+            if (!localStorage.getItem('theme')) {
+                const newTheme = e.matches ? 'dark' : 'light';
+                setTheme(newTheme);
+            }
+        });
+
+        // Initialize theme
+        initializeTheme();
+
         // Smooth reveal animation on scroll
         const observerOptions = {
             threshold: 0.1
