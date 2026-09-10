@@ -384,11 +384,6 @@
       <a href="#contact">Contacto</a>
     </nav>
     <div class="nav-actions">
-      <button id="themeToggle" class="cta-btn ghost" style="padding: 0.5rem 0.8rem;" title="Cambiar Tema (Claro/Oscuro)" aria-label="Cambiar tema de color">
-        <i id="themeIcon" class="fas fa-moon"></i>
-      </button>
-      <a href="#contact" class="cta-btn">Contacto</a>
-
       <button class="hamburger" id="hamburger" aria-label="Abrir menú">
         <span></span>
         <span></span>
