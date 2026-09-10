@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+    xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+                            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd
+                            http://www.google.com/schemas/sitemap-image/1.1
+                            http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd">
+
+    <!-- Página principal del Portafolio -->
+    <url>
+        <loc>https://israphelalba.github.io/israel-alba.github.io/</loc>
+        <lastmod>2026-09-09</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>1.0</priority>
+
+        <!-- Imágenes destacadas para indexación de Google Images -->
+        <image:image>
+            <image:loc>https://israphelalba.github.io/israel-alba.github.io/assets/images/og-preview.jpeg</image:loc>
+            <image:title>Israel Alba — Mobile Architect &amp; Full-Stack Engineer</image:title>
+            <image:caption>Vista previa de portafolio profesional de Israel Alba</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://israphelalba.github.io/israel-alba.github.io/assets/images/Albatross_funcionalities.jpeg</image:loc>
+            <image:title>Albatross Browser - App móvil Flutter</image:title>
+            <image:caption>Navegador privado desarrollado en Flutter por Israel Alba</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://israphelalba.github.io/israel-alba.github.io/assets/images/MediCalendar_functionalities.png</image:loc>
+            <image:title>MediCalendar - App de gestión médica Flutter</image:title>
+            <image:caption>Aplicación móvil de salud offline-first por Israel Alba</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://israphelalba.github.io/israel-alba.github.io/assets/images/Mifiniquito_functionalities.png</image:loc>
+            <image:title>Mi Finiquito - App conectada a Laravel Backend</image:title>
+            <image:caption>Calculadora laboral conectada a API REST PHP por Israel Alba</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://israphelalba.github.io/israel-alba.github.io/assets/images/CoolCV_Baner.png</image:loc>
+            <image:title>CoolCV App - Flutter &amp; AWS Amplify</image:title>
+            <image:caption>Generador de currículums en PDF integrado con DynamoDB</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://israphelalba.github.io/israel-alba.github.io/assets/images/DroidBridge_Banner_2.png</image:loc>
+            <image:title>DroidBridge - App Nativa macOS en Swift</image:title>
+            <image:caption>Herramienta nativa para macOS desarrollada en Swift por Israel Alba</image:caption>
+        </image:image>
+    </url>
+
+</urlset>
