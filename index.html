@@ -256,8 +256,6 @@
     .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .hamburger.active span:nth-child(2) { opacity: 0; }
     .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-    .nav-actions .cta-btn:not(.ghost) { display: none; }
   }
 
   .cta-btn {
@@ -376,7 +374,6 @@
     <a href="#home" class="logo">ISRAEL<span>.DEV</span></a>
 
     <div class="nav-overlay" id="navOverlay"></div>
-
     <nav class="nav-links" id="navLinks">
       <a href="#about">Sobre mí</a>
       <a href="#skills">Habilidades</a>
@@ -384,6 +381,10 @@
       <a href="#contact">Contacto</a>
     </nav>
     <div class="nav-actions">
+      <button id="themeToggle" class="cta-btn ghost" style="padding: 0.5rem 0.8rem;" title="Cambiar Tema (Claro/Oscuro)" aria-label="Cambiar tema de color">
+        <i id="themeIcon" class="fas fa-moon"></i>
+      </button>
+
       <button class="hamburger" id="hamburger" aria-label="Abrir menú">
         <span></span>
         <span></span>
