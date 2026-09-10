@@ -16,4 +16,4 @@ User-agent: Googlebot-Image
 Allow: /assets/images/
 
 # Enlace al archivo Sitemap
-Sitemap: https://israphelalba.github.io/israel-alba-portfolio/sitemap.xml
+Sitemap: https://israphelalba.github.io/israel-alba.github.io/sitemap.xml
