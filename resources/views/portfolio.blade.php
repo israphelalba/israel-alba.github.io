@@ -182,8 +182,9 @@
     max-width: 1160px; margin: 0 auto; padding: 1.1rem 5vw;
     display: flex; align-items: center; justify-content: space-between;
   }
-  .logo { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; }
+  .logo { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; z-index: 102; }
   .logo span { color: var(--primary); }
+
   .nav-links { display: flex; align-items: center; gap: 2rem; }
   .nav-links a {
     font-size: 0.92rem;
@@ -193,6 +194,66 @@
     display: inline-block;
   }
   .nav-links a:hover { color: var(--primary); transform: translateY(-1px); }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 102;
+    padding: 5px;
+  }
+  .hamburger span {
+    display: block;
+    width: 25px;
+    height: 2px;
+    background-color: var(--text);
+    transition: all 0.3s ease;
+  }
+
+  @media (max-width: 850px) {
+    .hamburger { display: flex; }
+    .nav-links {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 80%;
+      max-width: 300px;
+      height: 100vh;
+      background: var(--surface);
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2.5rem;
+      transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+      z-index: 101;
+    }
+    .nav-links.active { right: 0; }
+    .nav-links a { font-size: 1.2rem; }
+
+    .nav-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+    .nav-overlay.active { opacity: 1; visibility: visible; }
+
+    /* Animación Hamburguesa */
+    .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  }
 
   .cta-btn {
     font-family: var(--font-body); font-weight: 600; font-size: 0.88rem;
@@ -308,7 +369,16 @@
 <header class="nav">
   <div class="nav-inner">
     <a href="#home" class="logo">ISRAEL<span>.DEV</span></a>
-    <nav class="nav-links">
+
+    <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <nav class="nav-links" id="navLinks">
       <a href="#about">Sobre mí</a>
       <a href="#skills">Habilidades</a>
       <a href="#projects">Proyectos</a>
@@ -618,6 +688,28 @@
       htmlEl.setAttribute("data-theme", newTheme);
       localStorage.setItem("user-theme", newTheme);
       updateIcon(newTheme);
+    });
+
+    // Menú Móvil
+    const hamburger = document.getElementById("hamburger");
+    const navLinks = document.getElementById("navLinks");
+    const navOverlay = document.getElementById("navOverlay");
+    const links = document.querySelectorAll(".nav-links a");
+
+    function toggleMenu() {
+      hamburger.classList.toggle("active");
+      navLinks.classList.toggle("active");
+      navOverlay.classList.toggle("active");
+      document.body.style.overflow = navLinks.classList.contains("active") ? "hidden" : "";
+    }
+
+    hamburger.addEventListener("click", toggleMenu);
+    navOverlay.addEventListener("click", toggleMenu);
+
+    links.forEach(link => {
+      link.addEventListener("click", () => {
+        if (navLinks.classList.contains("active")) toggleMenu();
+      });
     });
   });
 
