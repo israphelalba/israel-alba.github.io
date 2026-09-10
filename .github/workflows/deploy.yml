@@ -22,6 +22,7 @@ jobs:
       - name: Generate Static HTML
         run: |
           cp .env.example .env
+          sed -i 's|APP_URL=.*|APP_URL=https://israphelalba.github.io/israel-alba-portfolio/|' .env
           php artisan key:generate
           # Generar el index.html a partir de la vista de Laravel
           php artisan tinker --execute="file_put_contents('public/index.html', view('portfolio')->render())"
