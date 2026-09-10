@@ -1,2 +1,19 @@
+# Directivas para todos los buscadores principales
 User-agent: *
-Disallow:
+Allow: /
+Allow: /assets/
+Allow: /assets/images/
+
+# Bloquear acceso a carpetas administrativas o internas de Laravel (si aplican)
+Disallow: /storage/framework/
+Disallow: /storage/logs/
+Disallow: /bootstrap/cache/
+Disallow: /vendor/
+Disallow: /*.json$
+
+# Directiva explícita para imágenes de vistas previas y portafolio
+User-agent: Googlebot-Image
+Allow: /assets/images/
+
+# Enlace al archivo Sitemap
+Sitemap: https://israelalba.dev/sitemap.xml
