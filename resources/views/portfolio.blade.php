@@ -365,6 +365,432 @@
   .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); outline: none; }
 
   footer { padding: 3rem 0; text-align: center; color: var(--text-dim); font-size: 0.88rem; }
+
+  /* ============================================================
+     iPhone mockup sobre la ventana solution.js
+     Pega este bloque al final del <style> de tu plantilla.
+     Usa tus mismas variables (--surface, --primary, --text…),
+     así que cambia solo con el toggle claro/oscuro.
+     ============================================================ */
+
+  .hero-visual {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1.5rem;
+  }
+
+  /* La ventana de código ya no necesita margen derecho */
+  .hero-visual .code-window {
+    display: none;
+    width: 100%;
+    transition: transform .5s cubic-bezier(.16, 1, .3, 1), filter .5s ease;
+  }
+  .hero-visual:hover .code-window { filter: saturate(.85) brightness(.96); }
+
+  /* ---------------- Carcasa ---------------- */
+  .iphone {
+    position: relative;
+    right: auto;
+    top: auto;
+    width: 236px;
+    aspect-ratio: 9 / 19.5;
+    transform: none;
+    z-index: 5;
+    padding: 3px;
+    border-radius: 46px;
+    /* Riel de titanio */
+    background: linear-gradient(145deg, #E3E5E8 0%, #8D9299 18%, #5C6067 38%, #C9CCD1 55%, #6A6F76 78%, #DCDEE2 100%);
+    box-shadow:
+      0 30px 60px -22px rgba(0, 0, 0, .65),
+      0 2px 6px rgba(0, 0, 0, .35);
+    animation: iphoneEntra 1s cubic-bezier(.16, 1, .3, 1) both .25s;
+  }
+
+  @keyframes iphoneEntra {
+    from { opacity: 0; transform: translateY(20px) scale(.95); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Flotación mínima, solo para que el objeto se sienta vivo */
+  .iphone-flota { animation: iphoneFlota 7s ease-in-out infinite 1.3s; }
+  @keyframes iphoneFlota {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-9px); }
+  }
+
+  /* Botones físicos */
+  .iphone::before,
+  .iphone::after {
+    content: "";
+    position: absolute;
+    width: 3px;
+    border-radius: 2px;
+    background: linear-gradient(180deg, #9AA0A7, #5A5F66);
+  }
+  .iphone::before { left: -3px; top: 112px; height: 30px; box-shadow: 0 44px 0 #7A8088, 0 92px 0 #7A8088; }
+  .iphone::after  { right: -3px; top: 146px; height: 52px; }
+
+  .iphone-pantalla {
+    position: relative;
+    height: 100%;
+    border-radius: 43px;
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid rgba(0, 0, 0, .55);
+    display: flex;
+    flex-direction: column;
+    isolation: isolate;
+  }
+
+  /* Brillo del cristal */
+  .iphone-brillo {
+    position: absolute;
+    inset: 0;
+    z-index: 9;
+    pointer-events: none;
+    border-radius: 43px;
+    background: linear-gradient(118deg, rgba(255, 255, 255, .16) 0%, rgba(255, 255, 255, 0) 38%);
+  }
+
+  /* ---------------- Barra de estado ---------------- */
+  .ios-estado {
+    position: relative;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 24px 0;
+    font-family: var(--font-body);
+    font-size: .68rem;
+    font-weight: 600;
+    letter-spacing: .01em;
+    color: var(--text);
+  }
+  .ios-estado-iconos { display: flex; align-items: center; gap: 4px; }
+  .ios-estado-iconos svg { width: 15px; height: 11px; fill: var(--text); }
+
+  .ios-isla {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 78px;
+    height: 24px;
+    border-radius: 999px;
+    background: #000;
+    z-index: 8;
+  }
+  .ios-isla::after {
+    content: "";
+    position: absolute;
+    right: 9px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #22303F, #05070B 70%);
+  }
+
+  /* ---------------- Lienzo y pantallas ---------------- */
+  .ios-lienzo {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .ios-vista {
+    position: absolute;
+    inset: 0;
+    padding: 10px 14px 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: hidden;
+  }
+  .ios-vista[hidden] { display: none; }
+
+  /* Transición de navegación iOS: empuje lateral */
+  .ios-vista.empuja-der { animation: iosDer .42s cubic-bezier(.32, .72, 0, 1) both; }
+  .ios-vista.empuja-izq { animation: iosIzq .42s cubic-bezier(.32, .72, 0, 1) both; }
+  @keyframes iosDer {
+    from { opacity: 0; transform: translateX(34px); }
+    to   { opacity: 1; transform: none; }
+  }
+  @keyframes iosIzq {
+    from { opacity: 0; transform: translateX(-34px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .ios-titulo {
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    font-weight: 700;
+    letter-spacing: -.02em;
+    color: var(--text);
+    margin: 0;
+  }
+  .ios-subtitulo {
+    font-size: .68rem;
+    color: var(--text-dim);
+    margin: 2px 0 0;
+  }
+
+  /* Lista agrupada estilo iOS */
+  .ios-lista {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+  }
+  .ios-lista li {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 11px;
+    border-bottom: 1px solid var(--border);
+    animation: iosFila .4s cubic-bezier(.16, 1, .3, 1) both;
+    animation-delay: calc(var(--i) * 65ms + 80ms);
+  }
+  .ios-lista li:last-child { border-bottom: 0; }
+  @keyframes iosFila {
+    from { opacity: 0; transform: translateY(9px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .ios-glifo {
+    flex: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 7px;
+    display: grid;
+    place-items: center;
+    background: color-mix(in srgb, var(--primary) 22%, transparent);
+    color: var(--primary);
+  }
+  .ios-glifo svg { width: 14px; height: 14px; fill: currentColor; }
+  .ios-glifo.es-azul   { background: color-mix(in srgb, var(--accent) 22%, transparent); color: var(--accent); }
+  .ios-glifo.es-verde  { background: color-mix(in srgb, var(--success) 22%, transparent); color: var(--success); }
+
+  .ios-fila-texto { display: grid; min-width: 0; }
+  .ios-fila-texto b { font-size: .74rem; font-weight: 600; color: var(--text); }
+  .ios-fila-texto span { font-size: .64rem; color: var(--text-dim); }
+  .ios-fila-valor {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: .66rem;
+    color: var(--text-dim);
+  }
+
+  /* Interruptor iOS */
+  .ios-switch {
+    margin-left: auto;
+    width: 34px;
+    height: 20px;
+    border-radius: 999px;
+    background: var(--border);
+    position: relative;
+    transition: background-color .3s cubic-bezier(.2, 0, 0, 1);
+    flex: none;
+  }
+  .ios-switch::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+    transition: transform .3s cubic-bezier(.2, 0, 0, 1);
+  }
+  .ios-switch.es-on { background: var(--success); }
+  .ios-switch.es-on::after { transform: translateX(14px); }
+
+  /* Gráfica */
+  .ios-grafica {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 118px;
+    padding: 12px 11px 22px;
+    border-radius: 12px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+  }
+  .ios-barra {
+    position: relative;
+    flex: 1;
+    height: var(--alto);
+    border-radius: 5px 5px 3px 3px;
+    background: linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 35%, transparent));
+    transform-origin: bottom;
+    animation: iosBarra .55s cubic-bezier(.2, 0, 0, 1) both;
+    animation-delay: calc(var(--i) * 55ms + 100ms);
+  }
+  .ios-barra i {
+    position: absolute;
+    bottom: -17px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-style: normal;
+    font-size: .55rem;
+    color: var(--text-dim);
+  }
+  @keyframes iosBarra {
+    from { transform: scaleY(0); opacity: 0; }
+    to   { transform: scaleY(1); opacity: 1; }
+  }
+
+  .ios-resumen {
+    display: flex;
+    gap: 8px;
+  }
+  .ios-dato {
+    flex: 1;
+    padding: 8px 10px;
+    border-radius: 10px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+  }
+  .ios-dato b { display: block; font-family: var(--font-display); font-size: .95rem; color: var(--text); }
+  .ios-dato span { font-size: .58rem; color: var(--text-dim); }
+
+  /* ---------------- Tab bar ---------------- */
+  .ios-tabbar {
+    display: flex;
+    padding: 7px 8px 4px;
+    background: color-mix(in srgb, var(--surface-2) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--border);
+  }
+  .ios-tab {
+    flex: 1;
+    display: grid;
+    justify-items: center;
+    gap: 2px;
+    padding: 4px 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: .56rem;
+    font-weight: 500;
+    color: var(--text-dim);
+    transition: color .25s ease;
+  }
+  .ios-tab svg { width: 19px; height: 19px; fill: currentColor; transition: transform .35s cubic-bezier(.2, 0, 0, 1); }
+  .ios-tab.es-activa { color: var(--primary); }
+  .ios-tab.es-activa svg { transform: translateY(-1px) scale(1.1); }
+  .ios-tab:active svg { transform: scale(.9); }
+
+  .ios-home {
+    height: 18px;
+    display: grid;
+    place-items: center;
+    background: color-mix(in srgb, var(--surface-2) 88%, transparent);
+  }
+  .ios-home::after {
+    content: "";
+    width: 92px;
+    height: 4px;
+    border-radius: 999px;
+    background: var(--text);
+    opacity: .55;
+  }
+
+  /* ---------------- Formulario Contacto iOS ---------------- */
+  .ios-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 2px 0;
+  }
+  .ios-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .ios-campo label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--text-dim);
+    padding-left: 4px;
+    text-transform: uppercase;
+  }
+  .ios-input {
+    width: 100%;
+    padding: 10px 12px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .ios-input:focus {
+    border-color: var(--primary);
+  }
+  .ios-btn {
+    margin-top: 4px;
+    padding: 11px;
+    background: var(--primary);
+    color: var(--primary-ink);
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .ios-btn:active {
+    transform: scale(0.97);
+  }
+
+  /* ---------------- Responsive ---------------- */
+  @media (max-width: 1050px) {
+    .iphone { width: 205px; right: -14px; }
+    .hero-visual .code-window { margin-right: 60px; }
+  }
+
+  @media (max-width: 850px) {
+    .hero-visual {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+    .hero-visual .code-window { display: block; margin-right: 0; width: 100%; }
+    .iphone {
+      position: static;
+      transform: none;
+      width: 250px;
+      animation: iphoneEntraMovil .8s cubic-bezier(.16, 1, .3, 1) both;
+    }
+    .iphone-flota { animation: none; }
+    @keyframes iphoneEntraMovil {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: none; }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .iphone, .iphone-flota, .ios-vista, .ios-lista li, .ios-barra { animation: none !important; }
+    .iphone { opacity: 1; }
+  }
+
   </style>
 </head>
 <body>
@@ -408,19 +834,186 @@
         </div>
       </div>
 
-      <div class="code-window">
-        <div class="code-window-header">
-          <span class="dot-btn red"></span>
-          <span class="dot-btn yellow"></span>
-          <span class="dot-btn green"></span>
-          <span class="code-window-title">solution.js</span>
+      <div class="hero-visual">
+
+        {{-- iPhone --}}
+        <div class="iphone iphone-flota" id="iphone" role="img"
+             aria-label="Vista previa de una app iOS desarrollada en Flutter">
+          <div class="iphone-pantalla">
+            <span class="iphone-brillo" aria-hidden="true"></span>
+            <span class="ios-isla" aria-hidden="true"></span>
+
+            <div class="ios-estado">
+              <span>9:41</span>
+              <span class="ios-estado-iconos" aria-hidden="true">
+                <svg viewBox="0 0 18 12"><path d="M1 9h2v3H1zM5 6.5h2V12H5zM9 4h2v8H9zM13 1.5h2V12h-2z"/></svg>
+                <svg viewBox="0 0 18 12"><path d="M9 10.6 6.9 8.4a3 3 0 0 1 4.2 0zM9 6.4a5 5 0 0 0-3.5 1.4L4 6.3a7.1 7.1 0 0 1 10 0l-1.5 1.5A5 5 0 0 0 9 6.4M9 2.2a9.2 9.2 0 0 0-6.5 2.7L1 3.4a11.3 11.3 0 0 1 16 0l-1.5 1.5A9.2 9.2 0 0 0 9 2.2"/></svg>
+                <svg viewBox="0 0 26 12"><rect x="1" y="2" width="20" height="8" rx="2.6" fill="none" stroke="currentColor" stroke-width="1.1" opacity=".5"/><rect x="2.6" y="3.6" width="14" height="4.8" rx="1.4"/><path d="M22.4 4.6v2.8c.9-.3 1.4-.8 1.4-1.4s-.5-1.1-1.4-1.4" opacity=".5"/></svg>
+              </span>
+            </div>
+
+            <div class="ios-lienzo">
+
+              {{-- Pantalla 1 --}}
+              <section class="ios-vista" id="vista-hoy">
+                <header>
+                  <h3 class="ios-titulo">Hoy</h3>
+                  <p class="ios-subtitulo">Martes 16 · 3 recordatorios activos</p>
+                </header>
+
+                <ul class="ios-lista">
+                  <li style="--i:0">
+                    <span class="ios-glifo es-verde"><svg viewBox="0 0 16 16"><path d="M6.3 12.5 2 8.2l1.4-1.4 2.9 2.9 6.3-6.3L14 4.8z"/></svg></span>
+                    <span class="ios-fila-texto"><b>Losartán 50 mg</b><span>Tomado a las 08:00</span></span>
+                    <span class="ios-fila-valor">1/1</span>
+                  </li>
+                  <li style="--i:1">
+                    <span class="ios-glifo"><svg viewBox="0 0 16 16"><path d="M8 14.5 2.6 9.2A3.7 3.7 0 0 1 8 4.1a3.7 3.7 0 0 1 5.4 5.1z"/></svg></span>
+                    <span class="ios-fila-texto"><b>Presión arterial</b><span>Registro de la mañana</span></span>
+                    <span class="ios-fila-valor">118/76</span>
+                  </li>
+                  <li style="--i:2">
+                    <span class="ios-glifo es-azul"><svg viewBox="0 0 16 16"><path d="M12.5 2.5h-1v-1h-1.5v1h-4v-1H4.5v1h-1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-10a1 1 0 0 0-1-1m0 11h-9V6h9z"/></svg></span>
+                    <span class="ios-fila-texto"><b>Cita cardiología</b><span>Dr. Peralta · consultorio 4</span></span>
+                    <span class="ios-fila-valor">17:30</span>
+                  </li>
+                </ul>
+
+                <div class="ios-resumen">
+                  <div class="ios-dato"><b>96 %</b><span>Adherencia mensual</span></div>
+                  <div class="ios-dato"><b>12</b><span>Registros esta semana</span></div>
+                </div>
+              </section>
+
+              {{-- Pantalla 2 --}}
+              <section class="ios-vista" id="vista-metricas" hidden>
+                <header>
+                  <h3 class="ios-titulo">Métricas</h3>
+                  <p class="ios-subtitulo">Presión sistólica · últimos 7 días</p>
+                </header>
+
+                <div class="ios-grafica">
+                  <span class="ios-barra" style="--alto:58%;--i:0"><i>L</i></span>
+                  <span class="ios-barra" style="--alto:72%;--i:1"><i>M</i></span>
+                  <span class="ios-barra" style="--alto:64%;--i:2"><i>M</i></span>
+                  <span class="ios-barra" style="--alto:88%;--i:3"><i>J</i></span>
+                  <span class="ios-barra" style="--alto:70%;--i:4"><i>V</i></span>
+                  <span class="ios-barra" style="--alto:52%;--i:5"><i>S</i></span>
+                  <span class="ios-barra" style="--alto:66%;--i:6"><i>D</i></span>
+                </div>
+
+                <ul class="ios-lista">
+                  <li style="--i:0">
+                    <span class="ios-glifo es-verde"><svg viewBox="0 0 16 16"><path d="M2 12h2V7H2zm4 0h2V3H6zm4 0h2V9h-2z"/></svg></span>
+                    <span class="ios-fila-texto"><b>Promedio</b><span>Dentro del rango normal</span></span>
+                    <span class="ios-fila-valor">121/78</span>
+                  </li>
+                  <li style="--i:1">
+                    <span class="ios-glifo es-azul"><svg viewBox="0 0 16 16"><path d="M8 1.5 2.5 8h3v6.5h5V8h3z"/></svg></span>
+                    <span class="ios-fila-texto"><b>Glucosa en ayuno</b><span>Medición del jueves</span></span>
+                    <span class="ios-fila-valor">92 mg/dL</span>
+                  </li>
+                </ul>
+              </section>
+
+              {{-- Pantalla 3 --}}
+              <section class="ios-vista" id="vista-ajustes" hidden>
+                <header>
+                  <h3 class="ios-titulo">Ajustes</h3>
+                  <p class="ios-subtitulo">Datos cifrados en el dispositivo</p>
+                </header>
+
+                <ul class="ios-lista">
+                  <li style="--i:0">
+                    <span class="ios-glifo"><svg viewBox="0 0 16 16"><path d="M8 15a1.7 1.7 0 0 0 1.7-1.6H6.3A1.7 1.7 0 0 0 8 15m5-4.2V7a5 5 0 0 0-3.8-4.9V1.6a1.2 1.2 0 1 0-2.4 0v.5A5 5 0 0 0 3 7v3.8L1.7 12.2h12.6z"/></svg></span>
+                    <span class="ios-fila-texto"><b>Recordatorios</b><span>Notificaciones locales</span></span>
+                    <span class="ios-switch es-on" aria-hidden="true"></span>
+                  </li>
+                  <li style="--i:1">
+                    <span class="ios-glifo es-azul"><svg viewBox="0 0 16 16"><path d="M12 6.7V5a4 4 0 0 0-8 0v1.7H2.8v7.5h10.4V6.7zm-6.4-1.7a2.4 2.4 0 0 1 4.8 0v1.7H5.6z"/></svg></span>
+                    <span class="ios-fila-texto"><b>Face ID</b><span>Bloqueo al abrir</span></span>
+                    <span class="ios-switch es-on" aria-hidden="true"></span>
+                  </li>
+                  <li style="--i:2">
+                    <span class="ios-glifo es-verde"><svg viewBox="0 0 16 16"><path d="M12.3 6.3a4.5 4.5 0 0 0-8.5-1.1A3.4 3.4 0 0 0 4.2 12h7.9a2.9 2.9 0 0 0 .2-5.7"/></svg></span>
+                    <span class="ios-fila-texto"><b>Copia en iCloud</b><span>Solo con Wi-Fi</span></span>
+                    <span class="ios-switch" aria-hidden="true"></span>
+                  </li>
+                </ul>
+
+                <div class="ios-resumen">
+                  <div class="ios-dato"><b>AES-256</b><span>Cifrado local</span></div>
+                  <div class="ios-dato"><b>Offline</b><span>Funciona sin red</span></div>
+                </div>
+              </section>
+
+              {{-- Pantalla 4: Contacto --}}
+              <section class="ios-vista" id="vista-contacto" hidden>
+                <header>
+                  <h3 class="ios-titulo">Contacto</h3>
+                  <p class="ios-subtitulo">Hablemos de tu próximo proyecto</p>
+                </header>
+
+                <form class="ios-form" onsubmit="handleMockupContactSubmit(event)">
+                  <div class="ios-campo">
+                    <label>Nombre</label>
+                    <input type="text" id="ios-name" class="ios-input" placeholder="Tu nombre" required>
+                  </div>
+                  <div class="ios-campo">
+                    <label>Email</label>
+                    <input type="email" id="ios-email" class="ios-input" placeholder="correo@ejemplo.com" required>
+                  </div>
+                  <div class="ios-campo">
+                    <label>Mensaje</label>
+                    <textarea id="ios-message" class="ios-input" rows="3" placeholder="¿En qué puedo ayudarte?" required></textarea>
+                  </div>
+                  <button type="submit" class="ios-btn">
+                    <svg viewBox="0 0 20 20" style="width:16px;height:16px;fill:currentColor;"><path d="m17.5 2.5-15 6.5 6 2.5 2.5 6 6.5-15z"/></svg>
+                    Enviar Mensaje
+                  </button>
+                </form>
+              </section>
+
+            </div>
+
+            <div class="ios-tabbar" role="tablist" aria-label="Pantallas de la app">
+              <button class="ios-tab es-activa" role="tab" aria-selected="true" aria-controls="vista-hoy" data-vista="vista-hoy">
+                <svg viewBox="0 0 20 20"><path d="M15.5 3h-1V1.7h-1.9V3H7.4V1.7H5.5V3h-1a1.3 1.3 0 0 0-1.3 1.3v12a1.3 1.3 0 0 0 1.3 1.3h11a1.3 1.3 0 0 0 1.3-1.3v-12A1.3 1.3 0 0 0 15.5 3m0 13.3h-11V7.5h11z"/></svg>
+                <span>Hoy</span>
+              </button>
+              <button class="ios-tab" role="tab" aria-selected="false" aria-controls="vista-metricas" data-vista="vista-metricas">
+                <svg viewBox="0 0 20 20"><path d="M3 16h2.6V9.2H3zm5.7 0h2.6V4H8.7zm5.7 0H17v-4.5h-2.6z"/></svg>
+                <span>Métricas</span>
+              </button>
+              <button class="ios-tab" role="tab" aria-selected="false" aria-controls="vista-ajustes" data-vista="vista-ajustes">
+                <svg viewBox="0 0 20 20"><path d="M16.3 10.8a6.4 6.4 0 0 0 0-1.6l1.7-1.3-1.7-2.9-2 .8a6.3 6.3 0 0 0-1.4-.8l-.3-2.1H9.2L8.9 5a6.3 6.3 0 0 0-1.4.8l-2-.8L3.8 7.9l1.7 1.3a6.4 6.4 0 0 0 0 1.6l-1.7 1.3 1.7 2.9 2-.8a6.3 6.3 0 0 0 1.4.8l-2 .8 1.7-2.9zM10 12.9A2.9 2.9 0 1 1 12.9 10 2.9 2.9 0 0 1 10 12.9"/></svg>
+                <span>Ajustes</span>
+              </button>
+              <button class="ios-tab" role="tab" aria-selected="false" aria-controls="vista-contacto" data-vista="vista-contacto">
+                <svg viewBox="0 0 20 20"><path d="M18 5v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2zM4 5v2l6 3.5L16 7V5H4zm12 10V9l-6 3.5L4 9v6h12z"/></svg>
+                <span>Contacto</span>
+              </button>
+            </div>
+
+            <div class="ios-home" aria-hidden="true"></div>
+          </div>
         </div>
-        <div class="code-window-body">
-  <pre><code><span class="kw">function</span> <span class="fn">buildSolution</span>(problema) {
-    <span class="kw">const</span> plan = <span class="fn">entender</span>(problema);
-    <span class="kw">return</span> <span class="fn">construir</span>(plan, <span class="str">"a tiempo"</span>);
-  }<span class="cursor"></span></code></pre>
+
+        <div class="code-window">
+          <div class="code-window-header">
+            <span class="dot-btn red"></span>
+            <span class="dot-btn yellow"></span>
+            <span class="dot-btn green"></span>
+            <span class="code-window-title">solution.js</span>
+          </div>
+          <div class="code-window-body">
+<pre><code><span class="kw">function</span> <span class="fn">buildSolution</span>(problema) {
+  <span class="kw">const</span> plan = <span class="fn">entender</span>(problema);
+  <span class="kw">return</span> <span class="fn">construir</span>(plan, <span class="str">"a tiempo"</span>);
+}<span class="cursor"></span></code></pre>
+          </div>
         </div>
+
       </div>
     </div>
   </section>
@@ -712,6 +1305,90 @@
         if (navLinks.classList.contains("active")) toggleMenu();
       });
     });
+
+    /* ============================================================
+       iPhone mockup — interacción
+       Pega esto dentro de tu <script>, al final del
+       document.addEventListener("DOMContentLoaded", ...) que ya tienes.
+       ============================================================ */
+
+    (function () {
+      var iphone = document.getElementById("iphone");
+      if (!iphone) return;
+
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var tabs = Array.prototype.slice.call(iphone.querySelectorAll(".ios-tab"));
+      var vistas = Array.prototype.slice.call(iphone.querySelectorAll(".ios-vista"));
+      var actual = 0;
+      var ciclo = null;
+
+      function mostrar(destino) {
+        if (destino === actual) return;
+        var clase = destino > actual ? "empuja-der" : "empuja-izq";
+
+        vistas.forEach(function (v, i) {
+          v.classList.remove("empuja-der", "empuja-izq");
+          if (i === destino) {
+            v.hidden = false;
+            if (!reduce) {
+              void v.offsetWidth;          // reinicia las animaciones internas
+              v.classList.add(clase);
+            }
+          } else {
+            v.hidden = true;
+          }
+        });
+
+        tabs.forEach(function (t, i) {
+          t.classList.toggle("es-activa", i === destino);
+          t.setAttribute("aria-selected", String(i === destino));
+        });
+
+        actual = destino;
+      }
+
+      tabs.forEach(function (t, i) {
+        t.addEventListener("click", function () {
+          mostrar(i);
+          detener();                        // si el usuario toca, deja de rotar solo
+        });
+      });
+
+      // Los interruptores responden al toque
+      iphone.querySelectorAll(".ios-switch").forEach(function (sw) {
+        sw.addEventListener("click", function () {
+          sw.classList.toggle("es-on");
+        });
+      });
+
+      function iniciar() {
+        if (reduce || ciclo) return;
+        ciclo = setInterval(function () {
+          mostrar((actual + 1) % vistas.length);
+        }, 4500);
+      }
+
+      function detener() {
+        clearInterval(ciclo);
+        ciclo = null;
+      }
+
+      // Solo rota mientras el teléfono está a la vista y la pestaña del navegador está activa
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver(function (entradas) {
+          entradas[0].isIntersecting ? iniciar() : detener();
+        }, { threshold: 0.35 }).observe(iphone);
+      } else {
+        iniciar();
+      }
+
+      document.addEventListener("visibilitychange", function () {
+        document.hidden ? detener() : iniciar();
+      });
+
+      iphone.addEventListener("mouseenter", detener);
+      iphone.addEventListener("mouseleave", iniciar);
+    })();
   });
 
   function handleContactSubmit(event) {
@@ -721,6 +1398,32 @@
     const userEmail = document.getElementById('email').value;
     const message = document.getElementById('message').value;
 
+    sendEmail(name, userEmail, message);
+  }
+
+  function handleMockupContactSubmit(event) {
+    event.preventDefault();
+
+    const name = document.getElementById('ios-name').value;
+    const userEmail = document.getElementById('ios-email').value;
+    const message = document.getElementById('ios-message').value;
+
+    sendEmail(name, userEmail, message);
+
+    // Feedback visual en el iPhone
+    const btn = event.target.querySelector('.ios-btn');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '¡Enviado!';
+    btn.style.background = 'var(--success)';
+    setTimeout(() => {
+      btn.innerHTML = originalText;
+      btn.style.background = '';
+      // Limpiar campos del mockup
+      event.target.reset();
+    }, 3000);
+  }
+
+  function sendEmail(name, userEmail, message) {
     const recipient = "israphelalba@yahoo.com.mx";
     const subjectText = `Contacto de ${name}`;
     const rawBodyText = `Hola Israel,\n\nMi nombre es ${name} (${userEmail}).\n\nMensaje / Detalles del Proyecto:\n${message}`;
@@ -734,7 +1437,7 @@
     document.getElementById('btnGmail').href = gmailUrl;
     document.getElementById('contactFallback').style.display = 'block';
 
-    // Disparar mailto mediante iframe invisible para evitar bloqueos de pantalla/navegación
+    // Disparar mailto mediante iframe invisible
     const iframe = document.createElement('iframe');
     iframe.style.display = 'none';
     iframe.src = mailtoUrl;
